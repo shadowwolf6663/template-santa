@@ -156,19 +156,19 @@ hr{
 
 }
 
-#good{
+.good{
 
     color: green; /* setting colour of text */
 
 }
 
-#medium{
+.medium{
 
     color:yellow; /* setting colour of text */
 
 }
 
-#bad{
+.bad{
 
     color: red; /* setting colour of text */
 

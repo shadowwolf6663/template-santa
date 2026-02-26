@@ -33,19 +33,16 @@ echo "</form>";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
-        $_SESSION["strength"] = 0; // default value
-        $_SESSION["password"] = $_POST["password"]; // setting a session value from inputs
-        echo num_check(); // calls function and echos value returned to screen
-        echo len_check(); // calls function and echos value returned to screen
-        echo lower_check(); // calls function and echos value returned to screen
-        echo upper_check(); // calls function and echos value returned to screen
-        echo special_check(); // calls function and echos value returned to screen
-        echo first_special_check(); // calls function and echos value returned to screen
-        echo last_special_check(); // calls function and echos value returned to screen
-        echo common_check(); // calls function and echos value returned to screen
-        echo first_num_check(); // calls function and echos value returned to screen
-        echo strength_check(); // calls function and echos value returned to screen
-        if ($_SESSION["strength"] >= 7){
+        $result = check_password_strength($_POST['password']);
+
+        echo "<div class='{$result['level']}'>";
+        echo "Strength: {$result['strength']}/9";
+        echo "</div>";
+
+        foreach ($result['messages'] as $message) {
+            echo "<div class='bad'>$message</div>";
+        }
+        if ($result["strength"] >= 7){
             new_user(dbconnect_insert(), $_POST);
             $_SESSION["usermessage"]="SUCCESS: user created!";
             //auditor(dbconnect_insert(),getnewuserid(dbconnect_select(),$_POST["username"]),"reg","created new user ");
